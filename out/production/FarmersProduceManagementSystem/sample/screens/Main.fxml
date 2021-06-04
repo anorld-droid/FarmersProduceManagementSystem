@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+       <Label fx:id="productlbl" graphicTextGap="6.0" layoutX="258.0" layoutY="8.0" prefHeight="25.0" prefWidth="123.0" text="         PRODUCTS" />
+      <TableView fx:id="producttbl" layoutX="10.0" layoutY="-31.0" minHeight="0.0"
+                 minWidth="0.0" prefHeight="252.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn prefWidth="30.0" text="ID" />
+          <TableColumn prefWidth="195.0" text="Name" />
+          <TableColumn prefWidth="157.0" text="Quantity" />
+          <TableColumn prefWidth="261.0" text="Expiry Date" />
+        </columns>
+         <padding>
+            <Insets bottom="60.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </TableView>
+      <Button layoutX="49.0" layoutY="382.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="93.0" text="Farmers">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button fx:id="retailersbtn" layoutX="442.0" layoutY="382.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Retailers">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+   </children>
+</AnchorPane>
