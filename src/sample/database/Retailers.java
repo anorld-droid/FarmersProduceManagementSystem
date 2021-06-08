@@ -15,7 +15,6 @@ public class Retailers {
         this.lastName = lname;
         this.products = products;
         this.quantity = quantity;
-        this.expiryDate = expiryDate;
         this.price = price;
     }
 
@@ -39,9 +38,6 @@ public class Retailers {
         return quantity;
     }
 
-    public String getExpiryDate() {
-        return expiryDate;
-    }
 
     public double getPrice() {
         return price;
@@ -65,10 +61,6 @@ public class Retailers {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
-    }
-
-    public void setExpiryDate(String expiryDate) {
-        this.expiryDate = expiryDate;
     }
 
     public void setPrice(double price) {
