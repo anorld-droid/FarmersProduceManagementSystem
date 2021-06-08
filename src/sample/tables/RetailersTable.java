@@ -22,24 +22,20 @@ public class RetailersTable {
         products.setCellValueFactory(new PropertyValueFactory<>("products"));
         TableColumn<Retailers, String> quantity = new TableColumn<>("Quantity");
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        TableColumn<Retailers, String> expiryDate = new TableColumn<>("Expiry Date");
-        expiryDate.setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
         TableColumn<Retailers, String> price = new TableColumn<>("Price");
         price.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
         name.getColumns().addAll(firstName, lastName);
         id.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
         id.resizableProperty().setValue(false);
-        firstName.prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
+        firstName.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
         firstName.resizableProperty().setValue(false);
-        lastName.prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
+        lastName.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
         lastName.resizableProperty().setValue(false);
         products.prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
         products.resizableProperty().setValue(false);
-        quantity.prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
+        quantity.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
         quantity.resizableProperty().setValue(false);
-        expiryDate.prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
-        expiryDate.resizableProperty().setValue(false);
         price.prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
         price.resizableProperty().setValue(false);
 
@@ -48,7 +44,6 @@ public class RetailersTable {
         tableView.getColumns().add(name);
         tableView.getColumns().add(products);
         tableView.getColumns().add(quantity);
-        tableView.getColumns().add(expiryDate);
         tableView.getColumns().add(price);
         tableView.getItems().addAll(
                 new Retailers(1, "Vincent","Munene", "Beans","47 bags","23 December 2023", 450000),
