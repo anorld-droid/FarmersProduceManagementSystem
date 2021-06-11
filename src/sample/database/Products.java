@@ -1,46 +1,45 @@
 package sample.database;
 
-public class Products {
-    private int id;
-    private String name;
-    private String quantity;
-    private  String expiryDate;
-    public Products(int id, String name, String quantity, String expiryDate){
-        this.id = id;
-        this.name = name;
-        this.quantity = quantity;
-        this.expiryDate = expiryDate;
-    }
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-    public int getId() {
+public class Products {
+    //A class of Products that generates properties to be mapped to
+    //data from the database
+    public IntegerProperty id = new SimpleIntegerProperty();
+    public StringProperty name = new SimpleStringProperty();
+    public IntegerProperty amount = new SimpleIntegerProperty();
+    public StringProperty unit = new SimpleStringProperty();
+    public StringProperty expiryDate = new SimpleStringProperty();
+
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public String getName(){
+    public StringProperty nameProperty(){
         return name;
     }
 
-    public String getQuantity() {
-        return quantity;
+    public IntegerProperty amountProperty() {
+        return amount;
     }
 
-    public String getExpiryDate(){
+    public StringProperty unitProperty() {
+        return unit;
+    }
+
+    public StringProperty expiryDateProperty() {
         return expiryDate;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Products(int idValue, String nameValue, int amountValue ,String unitValue, String expiryDateValue){
+       id.setValue(idValue);
+       name.setValue(nameValue);
+       amount.setValue(amountValue);
+       unit.setValue(unitValue);
+       expiryDate.setValue(expiryDateValue);
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setExpiryDate(String expiryDate) {
-        this.expiryDate = expiryDate;
-    }
+    public Products(){}
 }

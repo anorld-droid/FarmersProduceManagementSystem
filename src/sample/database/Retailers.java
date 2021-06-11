@@ -1,70 +1,64 @@
 package sample.database;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Retailers {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String products;
-    private String quantity;
-    private  String expiryDate;
-    private double price;
+    //A class of retailers that generates properties to be mapped to
+    //data from the database
+    public IntegerProperty id = new SimpleIntegerProperty();
+    public StringProperty products = new SimpleStringProperty();
+    public IntegerProperty phoneNumber = new SimpleIntegerProperty();
+    public StringProperty firstName = new SimpleStringProperty();
+    public StringProperty lastName = new SimpleStringProperty();
+    public StringProperty unit = new SimpleStringProperty();
+    public IntegerProperty amount = new SimpleIntegerProperty();
+    public IntegerProperty price = new SimpleIntegerProperty();
 
-    public Retailers(int id, String fname, String lname, String products, String quantity, String expiryDate, double price){
-        this.id = id;
-        this.firstName = fname;
-        this.lastName = lname;
-        this.products = products;
-        this.quantity = quantity;
-        this.price = price;
-    }
 
-    public int getId() {
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public String getFirstName() {
+    public StringProperty productsProperty() {
+        return products; }
+
+    public StringProperty firstNameProperty() {
         return firstName;
     }
 
-    public String getLastName() {
+    public StringProperty lastNameProperty() {
         return lastName;
     }
 
-    public String getProducts() {
-        return products;
+    public IntegerProperty phoneNumberProperty() {
+        return phoneNumber;
     }
 
-    public String getQuantity() {
-        return quantity;
-    }
-
-
-    public double getPrice() {
+    public IntegerProperty priceProperty() {
         return price;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public IntegerProperty amountProperty() {
+        return amount;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public StringProperty unitProperty() {
+        return unit;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public Retailers(int idValue, String productsValue, String unitValue, int amountValue, String firstNameValue, String lastNameValue, int priceValue, String quantityValue){
+        id.setValue(idValue);
+        firstName.setValue(firstNameValue);
+        lastName.setValue(lastNameValue);
+        products.setValue(productsValue);
+        amount.setValue(amountValue);
+        unit.setValue(unitValue);
+        price.setValue(priceValue);
     }
 
-    public void setProducts(String products) {
-        this.products = products;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
+    public Retailers(){}
 }
 
