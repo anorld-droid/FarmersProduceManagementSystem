@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.tables.MainLayout;
 
-import java.io.IOException;
 
 public class Controller {
     @FXML
@@ -21,28 +20,12 @@ public class Controller {
     @FXML
     public Label lblStatus;
     @FXML
-    public Button productsBtn;
-    @FXML
-    public Button farmersBtn;
-    @FXML
-    public Button retailersBtn;
-    @FXML
-    public TableView farmersTbl;
-    @FXML
-    public TableView retailerTbl;
-    @FXML
-    public TableView productTbl;
-    @FXML
-    public TableColumn expiryDate;
-    @FXML
-    public TableColumn quantity;
-    @FXML
-    public TableColumn name;
-    @FXML
     public TableColumn id;
 
 
     public void Login(ActionEvent actionEvent) throws Exception {
+        //checks if the password is correct then calls the mainlayout
+        //if it's correct and closes
         if (txtUsername.getText().equals("user") && txtPassword.getText().equals("pass")) {
             lblStatus.setText("Log in Successful");
             MainLayout mainLayout = new MainLayout();
@@ -59,6 +42,5 @@ public class Controller {
         Stage stage = (Stage) loginBtn.getScene().getWindow();
         stage.close();
     }
-
 
 }
