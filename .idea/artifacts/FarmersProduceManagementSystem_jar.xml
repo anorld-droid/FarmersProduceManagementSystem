@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FarmersProduceManagementSystem:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FarmersProduceManagementSystem_jar</output-path>
+    <root id="archive" name="FarmersProduceManagementSystem.jar">
+      <element id="module-output" name="FarmersProduceManagementSystem" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/sample/database/sqlite-jdbc-3.34.0 (1).jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
