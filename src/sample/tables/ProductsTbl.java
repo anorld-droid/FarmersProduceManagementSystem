@@ -6,12 +6,14 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import sample.database.DatabaseConnection;
 import sample.database.Farmers;
 import sample.database.Products;
 import sample.database.Retailers;
 
+import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,18 +27,25 @@ public class ProductsTbl  {
         //Creates and returns the table to be displayed in the ui
 
         TableView<Products> tableView = new TableView();
+//        tableView.setEditable(true);
+
         TableColumn<Products, Integer> id = new TableColumn<>("ID");
+//        id.setCellFactory(TextFieldTableCell.forTableColumn());
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         TableColumn<Products, String> name = new TableColumn<>("Name");
+        name.setCellFactory(TextFieldTableCell.forTableColumn());
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn<Products, String> quantity = new TableColumn<>("Quantity");
+//        quantity.setCellFactory(TextFieldTableCell.forTableColumn());
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         TableColumn<Products, String> expiryDate = new TableColumn<>("Expiry Date");
         expiryDate.setCellFactory(TextFieldTableCell.forTableColumn());
         expiryDate.setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
         TableColumn<Products, String> amount = new TableColumn<>("Amount");
+//        amount.setCellFactory(TextFieldTableCell.forTableColumn());
         amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        TableColumn<Products, Integer> unit = new TableColumn<>("Unit");
+        TableColumn<Products, String> unit = new TableColumn<>("Unit");
+//        unit.setCellFactory(TextFieldTableCell.forTableColumn());
         unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
 
         quantity.getColumns().addAll(amount, unit);
@@ -103,7 +112,7 @@ public class ProductsTbl  {
         while (farmersProducts.next()){
             Products products = new Products();
             products.id.set(id);
-            products.name.set(farmersProducts.getString("Name"));
+            products.name.set(farmersProducts.getString("Name").toUpperCase());
             if (retailerProducts.next()) {
                 if (farmersProducts.getString("Name").equals(retailerProducts.getString("Name"))) {
                     products.amount.set(farmersProducts.getInt("Amount") - retailerProducts.getInt("rAmount"));
@@ -114,7 +123,7 @@ public class ProductsTbl  {
             }else {
                 products.amount.set(farmersProducts.getInt("Amount"));
             }
-            products.unit.set(farmersProducts.getString("Unit"));
+            products.unit.set(farmersProducts.getString("Unit").toUpperCase());
             products.expiryDate.set(farmersProducts.getString(1));
             data.add(products);
             id++;

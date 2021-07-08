@@ -1,15 +1,22 @@
 package sample.tables;
 
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import sample.database.DatabaseConnection;
 import sample.database.Farmers;
 import sample.database.Products;
 import sample.database.Retailers;
+
+import java.awt.event.ActionEvent;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.io.IOException;
@@ -71,6 +78,7 @@ public class MainLayout extends Application {
     }
     @Override
     public void start(Stage primaryStage)  {
+
         Layout(Products(), ProductsPane());
         //Setting the buttons property, such as the highlight, and adding them to
         //toggle group to allow only one to be selected at a time
@@ -129,9 +137,27 @@ public class MainLayout extends Application {
     private TableView<Products> Products() {
         //Takes table view from the table class and returns it
         try {
+//            MouseEvent mouseEvent = new MouseEvent();
+//            DatabaseConnection conn = new DatabaseConnection();
+//            Connection connection = conn.connect();
+//            Statement statement = connection.createStatement();
             ProductsTbl productsTbl = new ProductsTbl();
             tableView = productsTbl.ProductsData();
-        } catch (IOException e) {
+//            if (mouseEvent.getClickCount() == 2) {
+//                TablePosition position = (TablePosition) tableView.getSelectionModel().getSelectedCells().get(0);
+//                int row = position.getRow();
+//                TableColumn column = position.getTableColumn();
+//                String data = (String) column.getCellObservableValue(row).getValue();
+//                Products row1 = (Products) tableView.getSelectionModel().getSelectedItem();
+//                IntegerProperty c1 = row1.idProperty();
+//                String sql = "UPDATE Products set " + column + " = " + data + "where id = " + c1;
+//                statement.executeUpdate(sql);
+//                statement.close();
+//                connection.close();
+//            }
+
+
+        } catch (IOException  e) {
             System.out.println(e);
         }
         return tableView;
@@ -177,21 +203,33 @@ public class MainLayout extends Application {
         Button add = new Button("Add");
         add.setOnAction(event -> {
             try {
+                String text;
                 String fName = firstName.getText();
                 String lName = lastName.getText();
                 int phoneNum = Integer.parseInt(phoneNumber.getText());
-                String prodName = productName.getText();
                 int amountTxt = Integer.parseInt(amount.getText());
-                String unitTxt = unit.getText();
                 int pPrice =  Integer.parseInt(price.getText());
+                String prodName = productName.getText();
+                String unitTxt = unit.getText();
+                if (fName.isEmpty() || lName.isEmpty() || prodName.isEmpty() || unitTxt.isEmpty()){
+                    text = "No field can  be empty";
+                    throw new RuntimeException(text);
+                }
+
                 insert( prodName, amountTxt, unitTxt);
                 insert("Farmers",fName, lName, phoneNum, pPrice);
                 closePreviousWindow();
                 Layout(Farmers(), FarmersPane());
-            } catch (SQLException throwables) {
+            } catch (SQLException  throwables) {
                 throwables.printStackTrace();
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+              String  text = " Ensure Phone Number, Amount and Price are numbers";
+                dialogBox(text);
+            }catch (RuntimeException rte){
+                String  text = "All fields are required.Make sure to fill all the fields.";
+                dialogBox(text);
             }
-
         });
 
         GridPane farmersGridPane = new GridPane();
@@ -229,6 +267,7 @@ public class MainLayout extends Application {
         Button add = new Button("Add");
         add.setOnAction(event -> {
             try {
+                String text;
                 String fName = firstName.getText();
                 String lName = lastName.getText();
                 int phoneNum = Integer.parseInt(phoneNumber.getText());
@@ -236,12 +275,23 @@ public class MainLayout extends Application {
                 int amountTxt = Integer.parseInt(amount.getText());
                 String unitTxt = unit.getText();
                 int pPrice =  Integer.parseInt(price.getText());
+                if (fName.isEmpty() || lName.isEmpty() || prodName.isEmpty() || unitTxt.isEmpty()){
+                    text = "No field can  be empty";
+                    throw new RuntimeException(text);
+                }
                 insert( prodName, amountTxt, unitTxt);
                 insert("Retailers", fName, lName, phoneNum,pPrice);
                 closePreviousWindow();
                 Layout(Retailers(), RetailorsPane());
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                String  text = " Ensure Phone Number, Amount and Price are numbers";
+                dialogBox(text);
+            }catch (RuntimeException rte){
+                String  text = "All fields are required.Make sure to fill all the fields.";
+                dialogBox(text);
             }
 
         });
@@ -271,9 +321,19 @@ public class MainLayout extends Application {
         stage.close();
     }
 
+    private void dialogBox(String text){
+        final  Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+//                    dialog.initOwner(primaryStage);
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().add(new Text(text.toUpperCase()));
+        Scene dialogScene = new Scene(dialogVbox,350, 100);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
     private void insert( String tablename, String fname, String lname, int phoneNumber , int Price) throws SQLException {
         //insert statement that inserts and saves
-        // content from the user to the database,products and retailers table
+        // content from the user to the database in products and retailers table
         DatabaseConnection conn = new DatabaseConnection();
         Connection connection = conn.connect();
         Statement statement = null;
@@ -283,12 +343,16 @@ public class MainLayout extends Application {
         int product_id = resultSet.getInt("Id");
         String SQL = "insert into " + tablename+ " ( FirstName , LastName , PhoneNumber, Price, Products_id) "
         + "values ('" +
-   fname+ "','" + lname + "'," + phoneNumber +"," + Price +"," + product_id + " )";
+   fname.toUpperCase()+ "','" + lname.toUpperCase() + "'," + phoneNumber +"," + Price +"," + product_id + " )";
         statement.executeUpdate(SQL);
         statement.close();
         connection.commit();
         connection.close();
     }
+    private void addButtonValidator(String tableName){
+
+    }
+
     private void insert(  String productname,int amount, String unit) throws SQLException {
         //inserts and saves  data to teh database from the user to the products table
         DatabaseConnection conn = new DatabaseConnection();
@@ -297,7 +361,7 @@ public class MainLayout extends Application {
         String date = LocalDate.now().plusYears(1).toString();
         statement = connection.createStatement();
         String SQL = "INSERT INTO Products (Name, Amount, Unit, ExpiryDate) " +
-                "VALUES ('" + productname + "',"+ amount +",'"+ unit +"','" + date + "'" +")";
+                "VALUES ('" + productname.toUpperCase() + "',"+ amount +",'"+ unit.toUpperCase() +"','" + date + "'" +")";
         statement.executeUpdate(SQL);
         statement.close();
         connection.commit();
